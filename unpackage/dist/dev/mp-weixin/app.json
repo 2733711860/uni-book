@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search",
+    "pages/rank/rank",
+    "pages/category/category",
+    "pages/my/my"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#878787",
+    "selectedColor": "#2979ff",
+    "backgroundColor": "#f8f8f8",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "书城",
+        "iconPath": "static/img/index.png",
+        "selectedIconPath": "static/img/index_selected.png"
+      },
+      {
+        "pagePath": "pages/search/search",
+        "text": "书架",
+        "iconPath": "static/img/mybooks.png",
+        "selectedIconPath": "static/img/mybooks_selected.png"
+      },
+      {
+        "pagePath": "pages/rank/rank",
+        "text": "榜单",
+        "iconPath": "static/img/rank.png",
+        "selectedIconPath": "static/img/rank_selected.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/img/category.png",
+        "selectedIconPath": "static/img/category_selected.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
