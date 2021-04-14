@@ -33,6 +33,14 @@ const router = new MinRouter({
 		{
 			path: 'pages/read/read',
 			name: 'read'
+		},
+		{
+			path: 'pages/shelf/shelf',
+			name: 'shelf'
+		},
+		{
+			path: 'pages/searchResult/searchResult',
+			name: 'searchResult'
 		}
 	]
 })

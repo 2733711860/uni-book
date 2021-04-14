@@ -1,18 +1,18 @@
 <template>
 	<view class="card-page">
-		<view class="card-title">武侠仙侠</view>
+		<view class="card-title" v-if="!hideTitle">武侠仙侠</view>
 		<view class="card-content">
-			<view class="card-book" v-for="i in 3" :key="i">
+			<view class="card-book" v-for="i in 10" :key="i" @click="goPage">
 				<image src="../../static/img/4.jpg" class="book-img"></image>
 				<view class="book-msg">
 					<view class="book-name">
 						九鼎记
 					</view>
-					<view class="book-detail">
-						九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记
-					</view>
 					<view class="book-author">
 						番茄
+					</view>
+					<view class="book-detail">
+						九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记
 					</view>
 				</view>
 			</view>
@@ -21,6 +21,22 @@
 </template>
 
 <script>
+	export default {
+		props: {
+			hideTitle: {
+				type: Boolean,
+				default: false
+			}
+		},
+		
+		methods: {
+			goPage() {
+				this.$openPage({
+					name: 'detail'
+				})
+			}
+		}
+	}
 </script>
 
 <style scoped lang="scss">
@@ -28,12 +44,11 @@
 		background-color: $uni-bg-color;
 		border-radius: 15rpx;
 		box-shadow: $uni-border-boxshadow;
-		padding: 30rpx;
-		margin-top: 30rpx;
 		
 		.card-title{
 			font-size: $uni-font-size-lg;
 			font-weight: 550;
+			padding: 30rpx;
 		}
 		
 		.card-content{
@@ -43,11 +58,11 @@
 			.card-book{
 				display: flex;
 				width: 100%;
-				margin-top: 30rpx;
+				padding: 20rpx 30rpx;
 				
 				.book-img{
-					width: 100rpx;
-					height: 120rpx;
+					width: 120rpx;
+					height: 150rpx;
 					border-radius: 10rpx;
 				}
 				

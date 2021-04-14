@@ -47,20 +47,35 @@
 			<u-cell-item icon="setting-fill" title="获取用户信息" @click="getUserInfo"></u-cell-item>
 			<u-cell-item icon="setting-fill" title="分享" @click="shareInfo"></u-cell-item>
 			<u-cell-item icon="setting-fill" title="扫码" @click="scan"></u-cell-item>
+			<u-cell-item icon="setting-fill" title="扫描本地书籍" @click="getTxtList"></u-cell-item>
 		</view>
 	</view>
 </template>
 
 <script>
 	import { appMixin } from '@/mixins/appMixin.js';
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		mixins: [ appMixin ],
 		
 		data() {
 			return {
+				list: [],
 				downLoadUrl: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-904902d1-459b-4816-9470-94a5bf1625da/4c4d7035-da2b-4525-b610-f312f52df0ca.jpg'
 			}
 		},
+		
+		computed: {
+			...mapGetters([
+				'user'
+			])
+		},
+		
+		mounted() {
+			this.setUser('李白')
+			console.log(this.user);
+		},
+		
 		methods: {
 			uploadImg() {
 				uni.chooseImage({
@@ -150,7 +165,94 @@
 					complete: () => {
 					}
 				})
-			}
+			},
+			
+			getTxtList() {
+				uni.showLoading({
+					title: '扫描中请稍等...'
+				});
+				// 读取地址
+				const local = 'file:///storage/emulated/0/';
+				const MD_RegExp = /\.txt$/;
+				const spot_Reg = /^\./;
+				let self = this;
+				try {
+					plus.io.resolveLocalFileSystemURL(local, directoryEntry => {
+						// 设置文件路径
+						const fullPath = directoryEntry.fullPath;
+						// 设置文件获取列表
+						// const fileList = [];
+						// 设置文件夹映射表
+						const directory = {};
+						// 递归获取文件
+						const next = directoryEntry => {
+							// 获取文件夹信息
+							let directoryReader = directoryEntry.createReader();
+							// 获取文件列表信息
+							directoryReader.readEntries(
+								entries => {
+									//  entries[0].isDirectory true 是文件夹  false 是文件
+									// entries[0].isFile true 是文件  false 是文件夹
+									for (let i = 0; i < entries.length; i++) {
+										try {
+											// 是文件夹 并且 不是隐藏文件 并且 文件夹映射列表里没有  则递归判断
+											if (entries[i].isDirectory && !spot_Reg.test(entries[i].name) && !directory[entries[i].name]) {
+												// 读取文件夹信息
+												entries[i].getMetadata(
+													msg => {
+														// 如果文件夹中有内容则递归执行
+														directory[entries[i].name] = msg;
+														if (msg.directoryCount > 0 || msg.fileCount > 0) {
+															// 递归查找
+															next(entries[i]);
+														}
+													},
+													err => {
+														console.log(err);
+													}
+												);
+											} else if (entries[i].isFile && MD_RegExp.test(entries[i].name)) {
+												// 获取文件信息 并插入
+												entries[i].file(file => {
+													if (file.size > 102400) {
+														file['checked'] = false;
+														file['disabled'] = false;
+														file['humansize'] =
+															(file.size > 1048576 ? file.size / 1024 / 1024 : file.size / 1024).toFixed(2) + (file.size > 1048576 ? 'MB' : 'KB');
+														self.list.push(file);
+														console.log(self.list);
+														console.log(44444);
+														uni.hideLoading();
+													}
+												});
+											}
+										} catch (e) {
+											console.log(33333);
+											uni.hideLoading();
+											console.log(e);
+										}
+									}
+								},
+								err => {
+									console.log(22222);
+									uni.hideLoading();
+									console.log(err);
+								}
+							);
+						};
+						// 递归执行 获取数据
+						next(directoryEntry);
+					});
+				} catch (e) {
+					console.log(111111111);
+					console.log(e);
+					uni.hideLoading();
+				}
+			},
+			
+			...mapActions([
+				'setUser'
+			])
 		}
 	}
 </script>

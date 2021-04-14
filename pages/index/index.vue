@@ -51,13 +51,21 @@
 		
 		// #ifdef APP-PLUS
 		onNavigationBarButtonTap(e) {
-			if (e.index == 0) { // 扫码
+			if (e.index == 1) { // 扫码
 				this.scan(1);
-			} else if (e.index == 1) { // 分享
+			} else if (e.index == 2) { // 分享
 				this.shareInfo();
+			} else if (e.index == 0) { // 日历
+				
 			}
 		},
 		// #endif
+		
+		onNavigationBarSearchInputClicked() {
+			this.$openPage({
+				name: 'search'
+			})
+		},
 
 		methods: {
 			change(index) {

@@ -6,6 +6,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
+				"navigationBarTitleText": "",
 				"app-plus": {
 					"titleNView": {
 						"type": "default", // 开启渐变式导航条
@@ -13,24 +14,32 @@
 						"searchInput": { //搜索框
 							"backgroundColor": "rgba(230, 230, 230, .5)",
 							"borderRadius": "15px",
-							"placeholder": "请输入关键字 如：电视机",
-							"disabled": false,
+							"placeholder": "搜索",
+							"disabled": true,
 							"placeholderColor": "#606266",
-							"align": "left"
+							"align": "center"
 						},
 						"buttons": [{ //左边按钮
 								"color": "#606266",
 								"float": "left",
 								"fontSize": "26",
 								"fontSrc": "/static/iconfont/iconfont.ttf",
-								"text": "\ue603",
+								"text": "\ue61d",
 								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
 							},
 							{ //右边按钮
 								"fontSrc": "/static/iconfont/iconfont.ttf",
-								"text": "\ue622",
+								"text": "\ue749",
+								"fontSize": "20",
+								"color": "#606266",
+								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
+							},
+							{ //右边按钮
+								"fontSrc": "/static/iconfont/iconfont.ttf",
+								"text": "\ue620",
 								"fontSize": "26",
 								"color": "#606266",
+								"width": "40px",
 								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
 							}
 						]
@@ -42,40 +51,41 @@
 			"style": {
 				"app-plus": {
 					"titleNView": {
-						"type": "transparent", // 开启渐变式导航条
-						"backgroundColor": "#62c075",
+						"type": "default", // 开启渐变式导航条
 						"searchInput": { //搜索框
-							"backgroundColor": "rgba(230, 230, 230, .3)",
+							"autoFocus": true,
+							"backgroundColor": "rgba(230, 230, 230, .5)",
 							"borderRadius": "15px",
 							"placeholder": "请输入关键字 如：电视机",
 							"disabled": false,
-							"placeholderColor": "#878787",
+							"placeholderColor": "#606266",
 							"align": "left"
 						},
-						"buttons": [{ //左边按钮
-								"color": "#878787",
-								"float": "left",
-								"fontSize": "26",
-								"fontSrc": "/static/iconfont/iconfont.ttf",
-								"text": "\ue603",
-								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
-							},
-							{ //右边按钮
-								"fontSrc": "/static/iconfont/iconfont.ttf",
-								"text": "\ue622",
-								"fontSize": "26",
-								"color": "#878787",
-								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
-							}
-						]
+						"buttons": [{ //右边按钮
+							"text": "取消",
+							"fontSize": "16",
+							"color": "#606266",
+							"background": "rgba(0,0,0,0)" //将按钮背景改为透明
+						}]
 					}
 				}
 			}
 		}, {
 			"path": "pages/rank/rank",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"app-plus": {
+					"titleNView": {
+						"type": "default", // 开启渐变式导航条
+						"searchInput": { //搜索框
+							"backgroundColor": "rgba(230, 230, 230, .5)",
+							"borderRadius": "15px",
+							"placeholder": "搜索",
+							"disabled": true,
+							"placeholderColor": "#606266",
+							"align": "center"
+						}
+					}
+				}
 			}
 		}, {
 			"path": "pages/category/category",
@@ -128,13 +138,13 @@
 								"float": "right",
 								"fontSize": "26",
 								"fontSrc": "/static/iconfont/iconfont.ttf",
-								"text": "\ue603",
+								"text": "\ue65d",
 								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
 							},
 							{ //右边按钮
 								"fontSrc": "/static/iconfont/iconfont.ttf",
 								"float": "right",
-								"text": "\ue622",
+								"text": "\ue620",
 								"fontSize": "26",
 								"color": "#878787",
 								"width": "60px",
@@ -150,6 +160,52 @@
 				"app-plus": {
 					"titleNView": false
 				}
+			}
+
+		}, {
+			"path": "pages/shelf/shelf",
+			"style": {
+				"navigationBarTitleText": "书架",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+					"pullToRefresh": {
+						"style": "circle"
+					},
+					"titleNView": {
+						"type": "default",
+						"buttons": [{ // 右边按钮
+								"color": "#878787",
+								"fontSize": "24",
+								"fontSrc": "/static/iconfont/iconfont.ttf",
+								"text": "\ue61f",
+								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
+							},
+							{ //右边按钮
+								"color": "#878787",
+								"fontSize": "24",
+								"fontSrc": "/static/iconfont/iconfont.ttf",
+								"text": "\ue80f",
+								"width": "50px",
+								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
+							},
+							{ //左边按钮
+								"fontSrc": "/static/iconfont/iconfont.ttf",
+								"float": "left",
+								"text": "\ue609",
+								"fontSize": "18",
+								"color": "#878787",
+								"background": "rgba(0,0,0,0)" //将按钮背景改为透明
+							}
+						]
+					}
+				}
+			}
+
+		}, {
+			"path": "pages/searchResult/searchResult",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"enablePullDownRefresh": false
 			}
 
 		}
@@ -171,7 +227,7 @@
 			"iconPath": "static/img/index.png",
 			"selectedIconPath": "static/img/index_selected.png"
 		}, {
-			"pagePath": "pages/search/search",
+			"pagePath": "pages/shelf/shelf",
 			"text": "书架",
 			"iconPath": "static/img/shelf.png",
 			"selectedIconPath": "static/img/shelf_selected.png"

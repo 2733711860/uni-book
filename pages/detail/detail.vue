@@ -76,7 +76,10 @@
 	import cardTwo from '../../components/card/card-two.vue';
 	import cardThree from '../../components/card/card-three.vue';
 	import chapterOne from '../../components/chapter-popup/chapter-one.vue';
+	import { appMixin } from '@/mixins/appMixin.js';
 	export default {
+		mixins: [ appMixin ],
+		
 		components: {
 			cardTwo, cardThree, chapterOne
 		},
@@ -92,12 +95,19 @@
 			}
 		},
 		
+		onNavigationBarButtonTap(e) {
+			if (e.index == 0) { // 加入书架
+				console.log('加入书架');
+			} else if (e.index == 1) { // 分享
+				this.shareInfo();
+			}
+		},
+		
 		created() {
-			console.log(this.$parseURL().name)
+			// console.log(this.$parseURL().name)
 			uni.getSystemInfo({
 				success: res => {
 					// 获取状态栏高度给顶部占位节点
-					console.log(res.statusBarHeight);
 					this.statusBarHeight = res.statusBarHeight + 'px';
 				}
 			})

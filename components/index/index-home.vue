@@ -15,7 +15,7 @@
 		
 		<card-one></card-one>
 		<card-two></card-two>
-		<card-three></card-three>
+		<card-three class="card"></card-three>
 	</view>
 </template>
 
@@ -37,6 +37,10 @@
 			width: 100%;
 			height: 300rpx;
 			border-radius: 20rpx;
+		}
+		
+		.card{
+			margin-top: 30rpx;
 		}
 	}
 </style>

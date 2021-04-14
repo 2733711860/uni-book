@@ -1,0 +1,23 @@
+{
+  "name": "uni-book",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2733711860/uni-book.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2733711860/uni-book/issues"
+  },
+  "homepage": "https://github.com/2733711860/uni-book#readme",
+  "dependencies": {
+    "vuex-persistedstate": "^4.0.0-beta.3"
+  }
+}
