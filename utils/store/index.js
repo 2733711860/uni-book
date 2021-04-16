@@ -21,7 +21,8 @@ export default new Vuex.Store({
 				'user', 
 				'themeIndex',
 				'fontsize',
-				'lineHeight'
+				'lineHeight',
+				'bookList'
 			], // 要持久化的状态，在state里面取，如果有嵌套，可以  a.b.c
 			storage: { // 存储方式定义
 				getItem: (key) => uni.getStorageSync(key), // 获取

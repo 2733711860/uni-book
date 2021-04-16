@@ -19,7 +19,7 @@
 				<scroll-view scroll-y="true" class="chapter-content">
 					<view class="chapter-view">
 						<u-cell-group>
-							<u-cell-item title="第一章 天地玄黄" :arrow="false" v-for="i in 100" :key="i" @click="goPage">
+							<u-cell-item :title="item.title" :arrow="false" v-for="(item, index) in chapters" :key="index" @click="goPage(item)">
 								<text slot="right-icon" class="is-down">未离线</text>
 							</u-cell-item>
 						</u-cell-group>
@@ -75,6 +75,10 @@
 			value: {
 				type: Boolean,
 				default: false
+			},
+			chapters: {
+				type: Array,
+				default: () => []
 			}
 		},
 
@@ -88,9 +92,13 @@
 		},
 		
 		methods: {
-			goPage() {
+			goPage(item) {
 				this.$openPage({
-					name: 'read'
+					name: 'read',
+					query: {
+						bookId: item.bookId,
+						chapterId: item.chapterId
+					}
 				})
 			}
 		}

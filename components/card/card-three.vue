@@ -2,17 +2,17 @@
 	<view class="card-page">
 		<view class="card-title" v-if="!hideTitle">武侠仙侠</view>
 		<view class="card-content">
-			<view class="card-book" v-for="i in 10" :key="i" @click="goPage">
-				<image src="../../static/img/4.jpg" class="book-img"></image>
+			<view class="card-book" v-for="(item, index) in list" :key="index" @click="goPage(item)">
+				<image :src="item.bookImg" class="book-img"></image>
 				<view class="book-msg">
 					<view class="book-name">
-						九鼎记
+						{{item.bookName}}
 					</view>
 					<view class="book-author">
-						番茄
+						{{item.bookAuthor}}
 					</view>
 					<view class="book-detail">
-						九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记九鼎记
+						{{item.bookDesc}}
 					</view>
 				</view>
 			</view>
@@ -26,13 +26,20 @@
 			hideTitle: {
 				type: Boolean,
 				default: false
+			},
+			list: {
+				type: Array,
+				default: () => []
 			}
 		},
 		
 		methods: {
-			goPage() {
+			goPage(item) {
 				this.$openPage({
-					name: 'detail'
+					name: 'detail',
+					query: {
+						bookId: item.bookId
+					}
 				})
 			}
 		}

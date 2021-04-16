@@ -1,6 +1,6 @@
 <template>
 	<view class="result-page">
-		<card-three hideTitle></card-three>
+		<card-three hideTitle :list="resultList"></card-three>
 	</view>
 </template>
 
@@ -13,18 +13,21 @@
 		
 		data() {
 			return {
-				
+				resultList: []
 			}
 		},
 		
 		mounted() {
-			// uni.setNavigationBarTitle({
-			// 	title: '神秘复苏'
-			// })
+			this.getSearch()
 		},
 		
 		methods: {
-			
+			getSearch() {
+				this.$api.searchBook().then(res => {
+					console.log(res);
+					this.resultList = res.data;
+				})
+			}
 		}
 	}
 </script>

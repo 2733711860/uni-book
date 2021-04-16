@@ -5,3 +5,5 @@ export const SET_THEMEINDEX = 'SET_THEMEINDEX' // 当前主题索引
 export const SET_FONTSIZE = 'SET_FONTSIZE' // 字体大小
 
 export const SET_LINEHEIGHT = 'SET_LINEHEIGHT' // 行高
+
+export const SET_BOOKLIST = 'SET_BOOKLIST' // 书籍列表

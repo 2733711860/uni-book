@@ -35,6 +35,10 @@
 			}
 		},
 		
+		onNavigationBarSearchInputConfirmed() {
+			this.goPage();
+		},
+		
 		methods: {
 			goPage() {
 				this.$openPage({

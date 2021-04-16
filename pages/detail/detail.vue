@@ -52,7 +52,7 @@
 			</u-read-more>
 			<!-- #endif -->
 			
-			<view class="new-chapter" @click="goChapter()">
+			<view class="new-chapter" @click="showChapter = true">
 				<text class="title">章节</text>
 				<text class="newChapter">第三百章 灭世浮屠灭世浮屠灭世浮屠</text>
 				<u-icon name="clock"></u-icon>
@@ -68,7 +68,7 @@
 			<u-button type="success" size="medium" shape="circle" :ripple="true">立即阅读</u-button>
 		</view>
 		
-		<chapter-one v-model="showChapter"></chapter-one>
+		<chapter-one v-model="showChapter" :chapters="bookObj.chapters || []"></chapter-one>
 	</view>
 </template>
 
@@ -77,6 +77,7 @@
 	import cardThree from '../../components/card/card-three.vue';
 	import chapterOne from '../../components/chapter-popup/chapter-one.vue';
 	import { appMixin } from '@/mixins/appMixin.js';
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		mixins: [ appMixin ],
 		
@@ -89,10 +90,17 @@
 				rateValue: 4,
 				showChapter: false,
 				statusBarHeight: '',
+				bookObj: '',
 				content: `山不在高，有仙则名。水不在深，有龙则灵。斯是陋室，惟吾德馨。
 								苔痕上阶绿，草色入帘青。谈笑有鸿儒，往来无白丁。可以调素琴，阅金经。
 								无丝竹之乱耳，无案牍之劳形。南阳诸葛庐，西蜀子云亭。孔子云：何陋之有？`,
 			}
+		},
+		
+		computed: {
+			...mapGetters([
+				'bookList'
+			]),
 		},
 		
 		onNavigationBarButtonTap(e) {
@@ -116,14 +124,41 @@
 			})
 		},
 		
+		mounted() {
+			this.getChapter();
+			this.getBookDetail();
+		},
+		
 		methods: {
 			parseLoaded() {
 				this.$refs.uReadMore.init();
 			},
 			
-			goChapter() { // 章节
-				this.showChapter = true;
-			}
+			getChapter() {
+				this.$api.getBookChapter().then(res => {
+					this.bookObj.chapters = res.data;
+					this.setBook(this.bookObj);
+				})
+			},
+			
+			getBookDetail() {
+				this.$api.getBookDetail().then(res => {
+					this.bookObj = res.data;
+					this.bookObj = {
+						"bookId": res.data.bookId,
+						"bookName": res.data.bookName,
+						"bookAuthor": res.data.bookAuthor,
+						"bookDesc": res.data.bookDesc,
+						"bookImg": res.data.bookImg,
+						"updatedTime": res.data.updatedTime
+					}
+					this.setBook(this.bookObj);
+				})
+			},
+			
+			...mapActions([
+				'setBook'
+			])
 		}
 	}
 </script>

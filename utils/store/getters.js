@@ -9,3 +9,6 @@ export const fontsize = state => state.fontsize
 
 // 行高
 export const lineHeight = state => state.lineHeight
+
+// 书籍列表
+export const bookList = state => state.bookList

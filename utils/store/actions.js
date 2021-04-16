@@ -19,3 +19,30 @@ export const setFontsize = function({ commit }, fontsize) {
 export const setLineHeight = function({ commit }, lineHeight) {
   commit(types.SET_LINEHEIGHT, lineHeight)
 }
+
+// 书籍列表
+export const setBook = function({ state, commit }, bookObj) {
+	let originBook = {
+		"bookId": "",
+		"bookName": "",
+		"bookAuthor": "",
+		"bookDesc": "",
+		"bookImg": "",
+		"updatedTime": "",
+	  "currentIndex": -1,
+		"isOnShelf": false, // 是否放入书架
+		"currentPage": 1,
+	  "chapters": []
+	}
+	let books = JSON.parse(JSON.stringify(state.bookList)); // 拷贝一份书籍列表
+	let thisOne = books.find(item => item.bookId == bookObj.bookId);
+	if (thisOne) { // 已有则更新
+		let thisIndex = books.findIndex(item => item.bookId == bookObj.bookId);
+		Object.assign(thisOne, bookObj);
+		books.splice(thisIndex, 1, thisOne);
+	} else { // 没有则添加
+		Object.assign(originBook, bookObj);
+		books.push(originBook);
+	}
+  commit(types.SET_BOOKLIST, books)
+}

@@ -1,8 +1,8 @@
 <template>
 	<view class="read-page">
-		<view 
+		<!-- <view 
 			class="read-view" 
-			@click="showTool = !showTool" 
+			@click="showTool = !showTool"
 			:style="{ 
 				color: textColor, 
 				fontSize: forUpx(fontsize) + 'px',
@@ -11,7 +11,9 @@
 				paddingTop: 'calc('+statusBarHeight+' + 40px)',
 			}">
 			<u-parse :html="content"></u-parse>
-		</view>
+		</view> -->
+		
+		<read-view></read-view>
 		
 		<read-tool v-model="showTool"></read-tool>
 	</view>
@@ -21,9 +23,10 @@
 	import readTool from '../../components/read/read-tool.vue';
 	import zhuti from '@/utils/zhuti.json';
 	import { mapGetters } from 'vuex';
+	import readView from '@/components/read/read-view.vue'
 	export default {
 		components: {
-			readTool
+			readTool, readView
 		},
 		
 		data() {

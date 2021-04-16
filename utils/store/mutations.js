@@ -20,6 +20,11 @@ const mutations = {
 	[types.SET_LINEHEIGHT](state, lineHeight) {
 	  state.lineHeight = lineHeight
 	},
+	
+	// 书籍列表
+	[types.SET_BOOKLIST](state, bookList) {
+	  state.bookList = bookList
+	},
 }
 
 export default mutations
