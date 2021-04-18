@@ -47,8 +47,8 @@
 					<text>字体</text>
 					<slider 
 						:value="textFontSize" 
-						min="28" 
-						max="50" 
+						min="12" 
+						max="26" 
 						block-size="12" 
 						class="slider" 
 						:activeColor="fontColor" 
@@ -61,8 +61,9 @@
 					<text>行高</text>
 					<slider 
 						:value="textLineHeight" 
-						min="50" 
-						max="150" 
+						min="10" 
+						max="40"
+						step="10"
 						block-size="12" 
 						class="slider" 
 						:activeColor="fontColor" 
@@ -152,16 +153,16 @@
 		computed: {
 			...mapGetters([
 				'themeIndex',
-				'fontsize',
+				'fontSize',
 				'lineHeight'
 			]),
 			
 			textFontSize() { // 字体大小
-				return this.fontsize
+				return this.fontSize
 			},
 			
 			textLineHeight() { // 行高
-				return this.lineHeight
+				return this.lineHeight * 10;
 			}
 		},
 		
@@ -236,7 +237,7 @@
 			},
 			
 			changeLineHeight(e) { // 修改行高
-				this.setLineHeight(e.detail.value);
+				this.setLineHeight(e.detail.value / 10);
 			},
 			
 			changeBright(e) { // 修改亮度
@@ -398,8 +399,8 @@
 			.item-bg{
 				display: inline-block;
 				width: 150rpx;
-				height: 50rpx;
-				border-radius: 50rpx;
+				height: 60rpx;
+				border-radius: 60rpx;
 				margin-right: 20rpx;
 			}
 			

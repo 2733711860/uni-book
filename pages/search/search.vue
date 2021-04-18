@@ -35,14 +35,17 @@
 			}
 		},
 		
-		onNavigationBarSearchInputConfirmed() {
-			this.goPage();
+		onNavigationBarSearchInputConfirmed(e) {
+			this.goPage(e.text);
 		},
 		
 		methods: {
-			goPage() {
+			goPage(value) {
 				this.$openPage({
-					name: 'searchResult'
+					name: 'searchResult',
+					query: {
+						keyword: value
+					}
 				})
 			}
 		}

@@ -23,8 +23,9 @@
 		
 		methods: {
 			getSearch() {
-				this.$api.searchBook().then(res => {
-					console.log(res);
+				this.$api.searchBook({
+					keyWord: this.$parseURL().keyword
+				}).then(res => {
 					this.resultList = res.data;
 				})
 			}

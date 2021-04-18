@@ -57,4 +57,8 @@
 	.shelf-page, .scrollview{
 		height: 100%;
 	}
+	
+	.shelf-page{
+		padding: 30rpx 0;
+	}
 </style>

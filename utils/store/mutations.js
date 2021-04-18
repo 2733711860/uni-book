@@ -12,8 +12,8 @@ const mutations = {
 	},
 	
 	// 字体大小
-	[types.SET_FONTSIZE](state, fontsize) {
-	  state.fontsize = fontsize
+	[types.SET_FONTSIZE](state, fontSize) {
+	  state.fontSize = fontSize
 	},
 	
 	// 行高
@@ -24,6 +24,11 @@ const mutations = {
 	// 书籍列表
 	[types.SET_BOOKLIST](state, bookList) {
 	  state.bookList = bookList
+	},
+	
+	// 翻页模式
+	[types.SET_MODE](state, mode) {
+	  state.mode = mode
 	},
 }
 

@@ -1,6 +1,6 @@
 <template>
 	<view :class="[{ listClass: !isList }, 'card-page']">
-		<view :class="[{ listBook: !isList }, 'card-book']" v-for="i in 5" :key="i">
+		<view :class="[{ listBook: !isList }, 'card-book']" v-for="i in 5" :key="i" @click="goPage">
 			<image src="../../static/img/4.jpg" class="book-img"></image>
 			<view class="book-msg">
 				<view class="book-name">
@@ -23,6 +23,14 @@
 			isList: {
 				type: Boolean,
 				default: true
+			}
+		},
+		
+		methods: {
+			goPage() {
+				this.$openPage({
+					name: 'read'
+				})
 			}
 		}
 	}

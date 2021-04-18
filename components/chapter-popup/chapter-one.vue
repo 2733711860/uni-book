@@ -19,7 +19,7 @@
 				<scroll-view scroll-y="true" class="chapter-content">
 					<view class="chapter-view">
 						<u-cell-group>
-							<u-cell-item :title="item.title" :arrow="false" v-for="(item, index) in chapters" :key="index" @click="goPage(item)">
+							<u-cell-item :title="item.title" :arrow="false" v-for="(item, index) in chapters" :key="index" @click="goPage(item, index)">
 								<text slot="right-icon" class="is-down">未离线</text>
 							</u-cell-item>
 						</u-cell-group>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+	import { mapGetters, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -81,6 +82,12 @@
 				default: () => []
 			}
 		},
+		
+		computed: {
+			...mapGetters([
+				'bookList'
+			])
+		},
 
 		watch: {
 			value() {
@@ -92,15 +99,21 @@
 		},
 		
 		methods: {
-			goPage(item) {
+			goPage(item, index) {
+				let curBook = this.bookList.find(item => item.bookId == this.$parseURL().bookId);
+				curBook.currentIndex = index;
+				this.setBook(curBook);
 				this.$openPage({
 					name: 'read',
 					query: {
-						bookId: item.bookId,
-						chapterId: item.chapterId
+						bookId: this.$parseURL().bookId
 					}
 				})
-			}
+			},
+			
+			...mapActions([
+				'setBook'
+			])
 		}
 	}
 </script>

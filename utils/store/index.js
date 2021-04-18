@@ -20,9 +20,10 @@ export default new Vuex.Store({
 			paths: [
 				'user', 
 				'themeIndex',
-				'fontsize',
+				'fontSize',
 				'lineHeight',
-				'bookList'
+				'bookList',
+				'mode'
 			], // 要持久化的状态，在state里面取，如果有嵌套，可以  a.b.c
 			storage: { // 存储方式定义
 				getItem: (key) => uni.getStorageSync(key), // 获取

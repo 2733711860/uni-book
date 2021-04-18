@@ -11,13 +11,18 @@ export const setThemeIndex = function({ commit }, themeIndex) {
 }
 
 // 字体大小
-export const setFontsize = function({ commit }, fontsize) {
-  commit(types.SET_FONTSIZE, fontsize)
+export const setFontsize = function({ commit }, fontSize) {
+  commit(types.SET_FONTSIZE, fontSize)
 }
 
 // 行高
 export const setLineHeight = function({ commit }, lineHeight) {
   commit(types.SET_LINEHEIGHT, lineHeight)
+}
+
+// 翻页模式
+export const setMode = function({ commit }, mode) {
+  commit(types.SET_MODE, mode)
 }
 
 // 书籍列表

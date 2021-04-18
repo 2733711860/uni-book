@@ -90,7 +90,7 @@
 				rateValue: 4,
 				showChapter: false,
 				statusBarHeight: '',
-				bookObj: '',
+				bookObj: {},
 				content: `山不在高，有仙则名。水不在深，有龙则灵。斯是陋室，惟吾德馨。
 								苔痕上阶绿，草色入帘青。谈笑有鸿儒，往来无白丁。可以调素琴，阅金经。
 								无丝竹之乱耳，无案牍之劳形。南阳诸葛庐，西蜀子云亭。孔子云：何陋之有？`,
@@ -125,7 +125,6 @@
 		},
 		
 		mounted() {
-			this.getChapter();
 			this.getBookDetail();
 		},
 		
@@ -135,24 +134,30 @@
 			},
 			
 			getChapter() {
-				this.$api.getBookChapter().then(res => {
+				this.$api.getBookChapter({
+					bookId: this.$parseURL().bookId
+				}).then(res => {
 					this.bookObj.chapters = res.data;
 					this.setBook(this.bookObj);
 				})
 			},
 			
 			getBookDetail() {
-				this.$api.getBookDetail().then(res => {
-					this.bookObj = res.data;
-					this.bookObj = {
+				console.log(this.$parseURL().bookId);
+				this.$api.getBookDetail({
+					bookId: this.$parseURL().bookId
+				}).then(res => {
+					let obj = {
 						"bookId": res.data.bookId,
 						"bookName": res.data.bookName,
 						"bookAuthor": res.data.bookAuthor,
 						"bookDesc": res.data.bookDesc,
 						"bookImg": res.data.bookImg,
-						"updatedTime": res.data.updatedTime
+						"updatedTime": res.data.updatedTime,
+						"chapters": []
 					}
-					this.setBook(this.bookObj);
+					Object.assign(this.bookObj, obj);
+					this.getChapter();
 				})
 			},
 			

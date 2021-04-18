@@ -5,10 +5,13 @@ export const user = state => state.user
 export const themeIndex = state => state.themeIndex
 
 // 字体大小
-export const fontsize = state => state.fontsize
+export const fontSize = state => state.fontSize
 
 // 行高
 export const lineHeight = state => state.lineHeight
 
 // 书籍列表
 export const bookList = state => state.bookList
+
+// 翻页模式
+export const mode = state => state.mode

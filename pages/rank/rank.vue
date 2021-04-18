@@ -1,6 +1,6 @@
 <template>
 	<view class="rank-page">
-		<u-tabs-swiper ref="uTabs" :list="list" :current="current" @change="tabsChange" :is-scroll="false" active-color="#62c075"
+		<u-tabs-swiper class="tab" ref="uTabs" :list="list" :current="current" @change="tabsChange" :is-scroll="false" active-color="#62c075"
 		 swiperWidth="750"></u-tabs-swiper>
 		<swiper :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish" class="swiper-view">
 			<swiper-item class="swiper-item" v-for="(item, index) in list" :key="index">
@@ -76,6 +76,10 @@
 		display: flex;
 		flex-direction: column;
 		
+		.tab{
+			margin-bottom: 30rpx;
+		}
+		
 		.swiper-view{
 			flex: 1;
 			
@@ -83,7 +87,7 @@
 				height: 100%;
 				
 				.scroll-content{
-					padding: 0 20rpx 30rpx 20rpx;
+					padding: 0 0 30rpx 0;
 				}
 			}
 		}
