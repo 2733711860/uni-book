@@ -23,10 +23,16 @@
 		
 		methods: {
 			getSearch() {
+				uni.showLoading({
+					title: '加载中...'
+				});
 				this.$api.searchBook({
 					keyWord: this.$parseURL().keyword
 				}).then(res => {
 					this.resultList = res.data;
+					uni.hideLoading();
+				}).catch(err => {
+					uni.hideLoading();
 				})
 			}
 		}

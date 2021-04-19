@@ -6,13 +6,13 @@
 				<image src="../../static/img/14.jpg" class="book-img"></image>
 				<view class="detail-msg">
 					<view class="book-name">
-						斗破苍穹
+						{{bookObj.bookName}}
 					</view>
 					<view class="book-author">
-						天蚕土豆
+						{{bookObj.bookAuthor || ''}}
 					</view>
 					<view class="book-detail">
-						斗破苍穹斗破苍穹斗破苍穹斗破苍穹斗破苍穹斗破苍穹斗破苍穹斗破苍穹
+						{{bookObj.bookDesc || ''}}
 					</view>
 				</view>
 			</view>
@@ -42,21 +42,21 @@
 		<view class="brief">
 			<!-- #ifdef MP-WEIXIN -->
 			<u-read-more ref="uReadMore" :toggle="true" show-height="200">
-				<u-parse :html="content" @load="parseLoaded"></u-parse>
+				<u-parse :html="bookObj.bookDesc" @load="parseLoaded"></u-parse>
 			</u-read-more>
 			<!-- #endif -->
 			
 			<!-- #ifndef MP-WEIXIN -->
 			<u-read-more :toggle="true" show-height="200">
-				<rich-text :nodes="content"></rich-text>
+				<rich-text :nodes="bookObj.bookDesc"></rich-text>
 			</u-read-more>
 			<!-- #endif -->
 			
 			<view class="new-chapter" @click="showChapter = true">
 				<text class="title">章节</text>
-				<text class="newChapter">第三百章 灭世浮屠灭世浮屠灭世浮屠</text>
+				<text class="newChapter">{{newsChapter ? newsChapter.title : ''}}</text>
 				<u-icon name="clock"></u-icon>
-				<text>2021-04-07 16:01</text>
+				<text>{{updatedTime}}</text>
 			</view>
 		</view>
 		
@@ -68,7 +68,7 @@
 			<u-button type="success" size="medium" shape="circle" :ripple="true">立即阅读</u-button>
 		</view>
 		
-		<chapter-one v-model="showChapter" :chapters="bookObj.chapters || []"></chapter-one>
+		<chapter-one v-model="showChapter"></chapter-one>
 	</view>
 </template>
 
@@ -78,6 +78,7 @@
 	import chapterOne from '../../components/chapter-popup/chapter-one.vue';
 	import { appMixin } from '@/mixins/appMixin.js';
 	import { mapGetters, mapActions } from 'vuex';
+	import { formatDate } from '@/utils/utils.js';
 	export default {
 		mixins: [ appMixin ],
 		
@@ -89,11 +90,7 @@
 			return {
 				rateValue: 4,
 				showChapter: false,
-				statusBarHeight: '',
-				bookObj: {},
-				content: `山不在高，有仙则名。水不在深，有龙则灵。斯是陋室，惟吾德馨。
-								苔痕上阶绿，草色入帘青。谈笑有鸿儒，往来无白丁。可以调素琴，阅金经。
-								无丝竹之乱耳，无案牍之劳形。南阳诸葛庐，西蜀子云亭。孔子云：何陋之有？`,
+				statusBarHeight: ''
 			}
 		},
 		
@@ -101,6 +98,21 @@
 			...mapGetters([
 				'bookList'
 			]),
+			
+			bookObj() { // 当前书
+				let curBook = this.bookList.find(item => item.bookId == this.$parseURL().bookId) ?
+					this.bookList.find(item => item.bookId == this.$parseURL().bookId) : {};
+				return curBook;
+			},
+			
+			newsChapter() { // 最新章节
+				let chapterList = this.bookObj.chapters || [];
+				return chapterList[chapterList.length - 1];
+			},
+			
+			updatedTime() { // 更新时间
+				return this.bookObj.updatedTime || ''
+			}
 		},
 		
 		onNavigationBarButtonTap(e) {
@@ -134,16 +146,26 @@
 			},
 			
 			getChapter() {
+				uni.showLoading({
+					title: '加载中...'
+				});
 				this.$api.getBookChapter({
 					bookId: this.$parseURL().bookId
 				}).then(res => {
-					this.bookObj.chapters = res.data;
-					this.setBook(this.bookObj);
+					this.setBook({
+						bookId: this.$parseURL().bookId,
+						chapters: res.data
+					});
+					uni.hideLoading();
+				}).catch(err => {
+					uni.hideLoading();
 				})
 			},
 			
 			getBookDetail() {
-				console.log(this.$parseURL().bookId);
+				uni.showLoading({
+					title: '加载中...'
+				});
 				this.$api.getBookDetail({
 					bookId: this.$parseURL().bookId
 				}).then(res => {
@@ -156,8 +178,11 @@
 						"updatedTime": res.data.updatedTime,
 						"chapters": []
 					}
-					Object.assign(this.bookObj, obj);
+					this.setBook(obj);
+					uni.hideLoading();
 					this.getChapter();
+				}).catch(err => {
+					uni.hideLoading();
 				})
 			},
 			

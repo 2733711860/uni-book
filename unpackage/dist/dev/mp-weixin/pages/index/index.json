@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "精选",
-  "usingComponents": {
-    "u-search": "/uview-ui/components/u-search/u-search",
-    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
-    "index-home": "/components/index/index-home",
-    "index-boy": "/components/index/index-boy"
-  }
-}

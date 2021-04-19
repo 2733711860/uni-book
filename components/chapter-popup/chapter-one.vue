@@ -8,7 +8,7 @@
 						<u-icon name="close" @click="showChapter = false"></u-icon>
 					</view>
 					<view class="chapter-brief">
-						<text>共1579章</text>
+						<text>共{{chapterList.length}}章</text>
 						<view class="right">
 							<text>正序</text>
 							<i class="iconfont icon-paixu"></i>
@@ -16,59 +16,34 @@
 					</view>
 				</view>
 				
-				<scroll-view scroll-y="true" class="chapter-content">
-					<view class="chapter-view">
-						<u-cell-group>
-							<u-cell-item :title="item.title" :arrow="false" v-for="(item, index) in chapters" :key="index" @click="goPage(item, index)">
-								<text slot="right-icon" class="is-down">未离线</text>
-							</u-cell-item>
-						</u-cell-group>
-					</view>
-				</scroll-view>
+				<view class="chapter-content">
+					<virtual-list :items="chapterList" :size="size" :remain="18">
+						<template v-slot:default="slotItem">
+							<list-item :item="slotItem.item" :size="size"></list-item>
+						</template>
+					</virtual-list>
+				</view>
 			</view>
 		</view>
 		
 		<view class="popup-bg" v-if="showChapter" @click="showChapter = false">
 		</view>
 	</view>
-	
-	
-	
-	<!-- <u-popup v-model="showChapter" mode="bottom" border-radius="25" height="80%">
-		<view class="chapter-dom">
-			<view class="top">
-				<view class="top">
-					<text>目录</text>
-					<u-icon name="close" @click="showChapter = false"></u-icon>
-				</view>
-				<view class="chapter-brief">
-					<text>共1579章</text>
-					<view class="right">
-						<text>正序</text>
-						<i class="iconfont icon-paixu"></i>
-					</view>
-				</view>
-			</view>
-			
-			<scroll-view scroll-y="true" class="chapter-content">
-				<view class="chapter-view">
-					<u-cell-group>
-						<u-cell-item title="第一章 天地玄黄" :arrow="false" v-for="i in 100" :key="i" @click="goPage">
-							<text slot="right-icon" class="is-down">未离线</text>
-						</u-cell-item>
-					</u-cell-group>
-				</view>
-			</scroll-view>
-		</view>
-	</u-popup> -->
 </template>
 
 <script>
 	import { mapGetters, mapActions } from 'vuex';
+	import listItem from './xc-list-item.vue';
+	import virtualList from './xc-virtual-list.vue';
 	export default {
+		components: {
+			listItem, virtualList
+		},
+		
 		data() {
 			return {
-				showChapter: this.value
+				showChapter: this.value,
+				size: 0
 			}
 		},
 
@@ -76,17 +51,20 @@
 			value: {
 				type: Boolean,
 				default: false
-			},
-			chapters: {
-				type: Array,
-				default: () => []
 			}
 		},
 		
 		computed: {
 			...mapGetters([
 				'bookList'
-			])
+			]),
+			
+			chapterList() { // 当前书的章节列表
+				let list = this.bookList.find(item => item.bookId == this.$parseURL().bookId) &&
+					this.bookList.find(item => item.bookId == this.$parseURL().bookId).chapters ?
+					this.bookList.find(item => item.bookId == this.$parseURL().bookId).chapters : [];
+				return list;
+			}
 		},
 
 		watch: {
@@ -98,10 +76,15 @@
 			}
 		},
 		
+		mounted() {
+			this.size = +uni.upx2px(100);
+		},
+		
 		methods: {
-			goPage(item, index) {
+			goPage(item) {
 				let curBook = this.bookList.find(item => item.bookId == this.$parseURL().bookId);
-				curBook.currentIndex = index;
+				let chapterIndex = curBook.chapters.findIndex(item => item.chapterId == item.chapterId);
+				curBook.currentIndex = chapterIndex;
 				this.setBook(curBook);
 				this.$openPage({
 					name: 'read',
@@ -155,6 +138,7 @@
 			.top{
 				height: 90rpx;
 				display: flex;
+				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
 				padding: 0 20rpx;
@@ -165,11 +149,16 @@
 				height: 80rpx;
 				padding: 0 20rpx;
 				display: flex;
+				flex-direction: row;
 				justify-content: space-between;
 				align-items: center;
 				color: $uni-text-color-grey;
+				border-bottom: 2rpx solid $uni-bg-color-basic;
 				
 				.right{
+					display: flex;
+					flex-direction: row;
+					align-items: center;
 					.iconfont{
 						margin-left: 15rpx;
 					}
@@ -181,12 +170,9 @@
 			flex: 1;
 			overflow-y: auto;
 			
-			.chapter-view{
-				
-				.is-down{
-					color: $uni-text-color-grey;
-					font-size: $uni-font-size-mini;
-				}
+			.is-down{
+				color: $uni-text-color-grey;
+				font-size: $uni-font-size-mini;
 			}
 		}
 	}

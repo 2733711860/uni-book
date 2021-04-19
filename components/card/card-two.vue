@@ -4,9 +4,9 @@
 		<view class="card-content">
 			<view class="card-book" v-for="i in 4" :key="i" @click="goPage">
 				<image src="../../static/img/14.jpg" class="book-img"></image>
-				<view class="book-name">
+				<text class="book-name">
 					九鼎记九鼎记九鼎记九鼎记
-				</view>
+				</text>
 			</view>
 		</view>
 	</view>
@@ -44,6 +44,7 @@
 		
 		.card-content{
 			display: flex;
+			flex-direction: row;
 			justify-content: space-around;
 			
 			.card-book{

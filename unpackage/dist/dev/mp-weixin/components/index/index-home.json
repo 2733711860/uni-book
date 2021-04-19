@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "card-one": "/components/card/card-one",
-    "card-two": "/components/card/card-two",
-    "card-three": "/components/card/card-three"
-  }
-}
